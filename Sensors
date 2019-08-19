@@ -2,12 +2,21 @@
 ##### Sensors for furnace filter life sensor
 ##################################################
 
+# Sensor required for Home Assistant versions 0.96 and newer
+sensor:
+  - platform: template
+      hvac_action:
+        friendly_name: "HVAC action"
+        entity_id: climate.thermostat
+        value_template: "{{ state_attr('climate.thermostat','hvac_action') }}"
+
+
 # Sensor for cooling time during day before last filter change
 sensor:
   - platform: history_stats
     name: Cooling before last filter change
-    entity_id: climate.thermostat
-    state: 'cool'
+    entity_id: sensor.hvac_action
+    state: 'cooling'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: "{{ states('variable.furnace_filter') }}"
@@ -17,8 +26,8 @@ sensor:
 sensor:
   - platform: history_stats
     name: Heating before last filter change
-    entity_id: climate.thermostat
-    state: 'heat'
+    entity_id: sensor.hvac_action
+    state: 'heating'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: "{{ states('variable.furnace_filter') }}"
@@ -27,8 +36,8 @@ sensor:
 sensor:
   - platform: history_stats
     name: Cooling time today
-    entity_id: climate.thermostat
-    state: 'cool'
+    entity_id: sensor.hvac_action
+    state: 'cooling'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
@@ -36,9 +45,9 @@ sensor:
 # Sensor for today's heating time
 sensor:
   - platform: history_stats
-    name: Cooling time today
-    entity_id: climate.thermostat
-    state: 'heat'
+    name: Heating time today
+    entity_id: sensor.hvac_action
+    state: 'heating'
     type: time
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
@@ -62,8 +71,8 @@ sensor:
 sensor:
   - platform: history_stats
     name: Cooling time last 7 days
-    entity_id: climate.thermostat
-    state: 'cool'
+    entity_id: sensor.hvac_action
+    state: 'cooling'
     type: time
     end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     duration:
@@ -74,8 +83,8 @@ sensor:
 sensor:
   - platform: history_stats
     name: Heating time last 7 days
-    entity_id: climate.thermostat
-    state: 'heat'
+    entity_id: sensor.hvac_action
+    state: 'heating'
     type: time
     end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     duration:
