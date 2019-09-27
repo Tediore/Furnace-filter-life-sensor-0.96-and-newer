@@ -9,10 +9,12 @@ This project uses the variable custom component, template sensors, a script, his
 - The `hvac_action` template sensor is required for HASS versions 0.96 and newer to allow the history stats sensors to track heating/cooling runtime due to changes in the Climate component.
 - A template sensor adds the value in `hvac_runtime` and the heating/cooling runtime for the current day, and an automation runs each night to update `hvac_runtime` with this value so that the total runtime is permanently stored.
 
+
 ## Prerequisites
 - [Variable custom component](https://github.com/rogro82/hass-variables)
 - Everything in this repo
 - Being alive
+
 
 ## Notable features and limitations
 - Only requires 1 day of history (or 7 days if you want to calculate and display an estimate of when the filter will need to be changed based on the rolling 7-day average)
