@@ -15,12 +15,12 @@ This package uses the input_text and input_number integrations, template sensors
 
 ### Prerequisites
 - You must have a thermostat connected to Home Assistant via one of the Climate platforms.
-- You must be running Home Assistant version 0.96 or newer.
+- You must be running Home Assistant version 0.96 or newer (otherwise you'll need to tweak this a little bit).
 - `packages` [must be defined in your configuration.yaml](https://www.home-assistant.io/docs/configuration/packages/). Don't be scared, it's not difficult.
 
 
 ### Notable feature!
-- Only requires 1 day of history (or 7 days if you want to calculate and display an estimate of when the filter will need to be changed based on the rolling 7-day average).
+- Only requires one day of history (or seven days if you want to calculate and display an estimate of when the filter will need to be changed based on the rolling seven-day average).
 
 
 ### FAQ
