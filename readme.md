@@ -2,7 +2,7 @@
 
 *This is a re-release of the previous filter runtime sensor in `package` format instead of in separate pieces. Not sure why I didn't do it this way in the first place.*
 
-This package uses the input_text and input_number integrations, template sensors, a script, history stats sensors, and an automation to track and display the total HVAC runtime since the furnace filter was last changed and calculate an estimate of how many days until your filter will need to be changed. [History stats](https://www.home-assistant.io/integrations/history_stats/) are great, but they're limited to what you have `purge_keep_days` set to in `recorder`. This package only requires one day of history to record runtime and seven days to calculate remaining runtime based on a rolling seven-day average.
+This package uses the input_text and input_number integrations, template sensors, a script, history stats sensors, and an automation to track and display the total HVAC runtime since the furnace filter was last changed. It also calculates an estimate of the number of days until your filter will need to be changed. [History stats](https://www.home-assistant.io/integrations/history_stats/) are great, but they're limited to what you have `purge_keep_days` set to in `recorder`. This package only requires one day of history to record runtime and seven days to calculate remaining runtime based on a rolling seven-day average.
 
 - The `furnace_filter` input_text is a time/date string and is used to record when the filter was last changed.
 - The `hvac_runtime` input_number stores the total runtime since the filter was last changed.
