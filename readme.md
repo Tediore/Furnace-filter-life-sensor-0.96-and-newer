@@ -19,10 +19,6 @@ This package uses the input_text and input_number integrations, template sensors
 - `packages` [must be defined in your configuration.yaml](https://www.home-assistant.io/docs/configuration/packages/). Don't be scared, it's not difficult.
 
 
-### Notable feature!
-- Only requires one day of history (or seven days if you want to calculate and display an estimate of when the filter will need to be changed based on the rolling seven-day average).
-
-
 ### FAQ
 Q. Why did you use an `input_text` instead of `input_datetime` for the furnace filter change date?<br>
 A. I have no idea.
