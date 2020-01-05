@@ -1,4 +1,6 @@
-## Furnace filter runtime sensor (Home Assistant >= 0.96) (ENHANCED version)
+## Furnace filter runtime sensor (Home Assistant >= 0.96)
+
+*This is a re-release of the previous filter runtime sensor in `package` format instead of in separate pieces. Not sure why I didn't do it this way in the first place.*
 
 This package uses the input_text and input_number integrations, template sensors, a script, history stats sensors, and an automation to track and display the total HVAC runtime since the furnace filter was last changed. 
 
