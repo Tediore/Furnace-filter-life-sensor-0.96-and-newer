@@ -98,7 +98,7 @@ sensor:
     furnace_filter_days_remaining:
       friendly_name: "Furnace filter days remaining"
       value_template: >
-        {% if (states('sensor.average_total_runtime_week') | float) == 0 %}
+        {% if (states('sensor.average_total_runtime_week') | int) == 0 %}
           > 30
         {% elif ((((states('input_number.replacement_threshold') | float) - (states('sensor.furnace_filter_life') | float)) / (states('sensor.average_total_runtime_week') | float)) | round(0)) > 30 %}
           > 30
