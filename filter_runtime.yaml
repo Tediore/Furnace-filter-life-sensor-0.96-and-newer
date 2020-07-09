@@ -4,7 +4,7 @@ automation:
   initial_state: 'on'
   trigger:
   - platform: time
-    at: '00:00:01'
+    at: '00:00:30'
   action:
   - service: input_number.set_value
     entity_id: input_number.hvac_runtime
