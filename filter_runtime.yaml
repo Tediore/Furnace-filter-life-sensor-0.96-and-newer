@@ -4,8 +4,12 @@ automation:
   initial_state: 'on'
   trigger:
   - platform: time
-    at: '00:00:30'
+    at: '00:00:01'
   action:
+  - service: homeassistant.update_entity
+    entity_id:
+    - sensor.cooling_time_yesterday
+    - sensor.heating_time_yesterday
   - service: input_number.set_value
     entity_id: input_number.hvac_runtime
     data_template:
@@ -117,6 +121,10 @@ script:
       entity_id: input_text.furnace_filter
       data_template:
         value: '{{ now() }}'
+    - service: homeassistant.update_entity
+      entity_id:
+      - sensor.cooling_before_last_filter_change
+      - sensor.heating_before_last_filter_change
     - service: input_number.set_value
       entity_id: input_number.hvac_runtime
       data_template:
