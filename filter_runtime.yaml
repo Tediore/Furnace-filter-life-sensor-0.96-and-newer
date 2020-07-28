@@ -8,6 +8,8 @@ automation:
   action:
   - service: homeassistant.update_entity
     entity_id:
+    - sensor.cooling_time_today
+    - sensor.heating_time_today
     - sensor.cooling_time_yesterday
     - sensor.heating_time_yesterday
   - service: input_number.set_value
@@ -17,6 +19,15 @@ automation:
 
 
 sensor:
+# Cooling time today
+- platform: history_stats
+  name: Cooling time today
+  entity_id: sensor.hvac_action
+  state: 'cooling'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
+  
 # Cooling time yesterday (for use in storing runtime each night)
 - platform: history_stats
   name: Cooling time yesterday
@@ -45,6 +56,15 @@ sensor:
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:
     days: 7
+
+# Heating time today
+- platform: history_stats
+  name: Heating time today
+  entity_id: sensor.hvac_action
+  state: 'heating'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
 
 # Heating time yesterday (for use in storing runtime each night)
 - platform: history_stats
