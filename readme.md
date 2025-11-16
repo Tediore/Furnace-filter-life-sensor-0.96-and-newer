@@ -1,3 +1,77 @@
+## NOTE: This is no longer being maintained. 
+### I realized that it was way overengineered, so I moved to a much simpler setup which you can see below. Naturally, you'll need to substitute your own notification service and thermostat entity (like with the original package)
+
+```yaml
+timer:
+  furnace_filter:
+    name: Furnace filter life remaining
+    duration: '300:00:00'
+    icon: mdi:air-filter
+    restore: True
+
+template:
+- button:
+  - name: Filter replaced
+    unique_id: 'replace-furnace-filter-btn'
+    default_entity_id: button.furnace_filter_replaced
+    press:
+      service: timer.finish
+      entity_id: timer.furnace_filter
+
+- sensor:
+  - name: Furnace filter life remaining
+    unique_id: 'furnace-filter-life-rmng'
+    default_entity_id: sensor.furnace_filter_life
+    state: >
+      {% if state_attr('timer.furnace_filter', 'remaining') == None %}
+        {{ state_attr('timer.furnace_filter', 'duration').split(':')[0] }}
+      {% else %}
+        {% set timer_list = state_attr('timer.furnace_filter', 'remaining').split(":") %}
+        {{ timer_list[0] | int(0) + ((timer_list[1] | int(0) / 60) | round(1)) }}
+      {% endif %}
+    icon: 'mdi:air-filter'
+    unit_of_measurement: 'h'
+
+  - name: HVAC action
+    unique_id: 'hvac-action-sensor'
+    default_entity_id: sensor.hvac_action
+    state: "{{ state_attr('climate.thermostat', 'hvac_action') }}"
+
+automation:
+- alias: Start/stop timer with HVAC
+  id: 'start-stop-timer-hvac'
+  initial_state: true
+  trigger:
+  - platform: state
+    id: 'timer.start'
+    entity_id: sensor.hvac_action
+    to:
+    - 'cooling'
+    - 'heating'
+    - 'fan'
+  - platform: state
+    id: 'timer.pause'
+    entity_id: sensor.hvac_action
+    to: 'idle'
+  action:
+  - service: "{{ trigger.id }}"
+    entity_id: timer.furnace_filter
+
+- alias: Furnace filter replacement notification
+  id: 'furnace-filter-replacement-notif'
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.furnace_filter
+  action:
+  - service: notify.gotify_high
+    data:
+      title: Replace furnace filter
+      message: Filter has been used for 300 hours.
+```
+
 ## Furnace filter runtime sensor (Home Assistant >= 0.96)
 
 *This is a re-release of the previous filter runtime sensor in `package` format instead of in separate pieces. Not sure why I didn't do it this way in the first place.*
